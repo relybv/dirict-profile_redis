@@ -7,10 +7,13 @@ class profile_redis::install {
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
-
+  class { 'apt': }
   class { 'apt::backports':
-    pin    => 500,
-    notify => Exec['apt_update']
+    pin      => 500,
+    location => 'http://ftp.de.debian.org/debian',
+    release  => 'wheezy-backports',
+    repos    => 'main',
+    notify   => Exec['apt_update'],
   }
 
   package { 'redis-server':
