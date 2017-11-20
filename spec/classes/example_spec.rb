@@ -18,7 +18,13 @@ describe 'profile_redis' do
           it { is_expected.to contain_class('profile_redis::params') }
           it { is_expected.to contain_class('profile_redis::install') }
           it { is_expected.to contain_class('profile_redis::config') }
+          it { is_expected.to contain_class('profile_redis::service') }
 
+          it { is_expected.to contain_package('redis-server') }
+
+          it { is_expected.to contain_File_line('change_bindaddress') }
+
+          it { is_expected.to contain_service('redis-server') }
         end
       end
     end

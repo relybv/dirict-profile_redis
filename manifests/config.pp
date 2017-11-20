@@ -7,4 +7,10 @@ class profile_redis::config {
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
+
+  file_line { 'change_bindaddress':
+    path  => '/etc/redis/redis.conf',
+    line  => '# bind 127.0.0.1',
+    match => '^bind 127.0.0.1.*$',
+  }
 }
