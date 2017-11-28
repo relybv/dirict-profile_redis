@@ -14,10 +14,10 @@ RSpec.configure do |c|
   # Configure all nodes in nodeset
   c.before :suite do
     # Install module and dependencies
-    puppet_module_install(:source => proj_root, :module_name => 'profile_nfs')
+    puppet_module_install(:source => proj_root, :module_name => 'profile_redis')
     hosts.each do |host|
       on(host ,'mkdir -p /tmp/modules')
-      scp_to host, "#{proj_root}/spec/fixtures/modules", "/tmp", {:ignore => ["profile_nfs"]}
+      scp_to host, "#{proj_root}/spec/fixtures/modules", "/tmp", {:ignore => ["profile_redis"]}
       on(host,'mv /tmp/modules/* /etc/puppetlabs/code/modules/')
     end
   end
