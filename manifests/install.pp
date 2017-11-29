@@ -8,7 +8,7 @@ class profile_redis::install {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
 
-  class { 'apt': }
+  include apt
 
   if $::lsbdistcodename == 'wheezy' {
     class { 'apt::backports':
