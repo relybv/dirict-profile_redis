@@ -7,17 +7,21 @@ class profile_redis::install {
   if $caller_module_name != $module_name {
     fail("Use of private class ${name} by ${caller_module_name}")
   }
+
   class { 'apt': }
-  class { 'apt::backports':
-    pin      => 500,
-    location => 'http://ftp.de.debian.org/debian',
-    release  => 'wheezy-backports',
-    repos    => 'main',
-    notify   => Exec['apt_update'],
+
+  if $::lsbdistcodename == 'wheezy' {
+    class { 'apt::backports':
+      pin      => 500,
+      location => 'http://ftp.de.debian.org/debian',
+      release  => 'wheezy-backports',
+      repos    => 'main',
+      notify   => Exec['apt_update'],
+      before   => Package['redis-server'],
+    }
   }
 
   package { 'redis-server':
     ensure  => installed,
-    require => Class['apt::backports'],
   }
 }
