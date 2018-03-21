@@ -13,4 +13,10 @@ class profile_redis::config {
     line  => '# bind 127.0.0.1',
     match => '^bind 127.0.0.1.*$',
   }
+
+  file_line { 'change_protected-mode':
+    path  => '/etc/redis/redis.conf',
+    line  => 'protected-mode no',
+    match => '^protected-mode yes.*$',
+  }
 }
